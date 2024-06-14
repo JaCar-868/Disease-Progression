@@ -69,4 +69,4 @@ The predicted disease progression metrics for the test patients are printed to t
 Contributions are welcome! If you have any improvements or suggestions, please create a pull request or open an issue to discuss them.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/JaCar-868/Disease-Progression/blob/main/LICENSE) file for more details.
