@@ -1,72 +1,84 @@
-# Disease Progression Modeling using LSTM
-
-## Overview
+## Disease Progression LSTM Model
 
 This repository contains an implementation of a Long Short-Term Memory (LSTM) network to model disease progression. The goal is to predict future health metrics of patients based on historical data, helping in understanding and forecasting the progression of diseases.
 
-## Table of Contents
+## Key Features
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Code Explanation](#code-explanation)
-- [Contributing](#contributing)
-- [License](#license)
+Sliding-Window Sequence Generation: Builds input/output pairs for forecasting using a configurable window size.
 
-## Introduction
+Global Scaling: Applies a single MinMaxScaler fit to the entire training dataset for consistent feature ranges.
 
-Disease progression modeling is an important application of machine learning in healthcare. By predicting the future values of patient health metrics, healthcare providers can better understand the course of a disease and make informed decisions about treatment and care. This project demonstrates how LSTM networks can be used to predict these future values based on historical patient data.
+Modular Code Structure: Functions for data loading & preprocessing, model building, training, evaluation, and plotting.
 
-## Installation
+Reproducibility: Sets random seeds for NumPy and TensorFlow; prints version information.
 
-To run the code in this repository, you'll need to have Python installed along with the following libraries:
-- NumPy
-- Pandas
-- scikit-learn
-- TensorFlow
+Training Callbacks: Uses EarlyStopping (with patience) and ModelCheckpoint to save best model weights.
 
-You can install the required libraries using pip:
+Performance Metrics & Visualization: Tracks MSE and MAE during training; includes plots of loss and MAE.
 
-pip install numpy pandas scikit-learn tensorflow
+Model Persistence: Saves the best model to best_model.h5 and demonstrates loading and prediction.
+
+Example Predictions: Prints sample actual vs. predicted values (inverse-transformed).
+
+## Requirements
+
+Python 3.7+
+
+NumPy
+
+TensorFlow 2.x
+
+scikit-learn
+
+matplotlib
+
+Install via:
+
+pip install -r requirements.txt
 
 ## Usage
-1. Clone the repository:
 
-git clone https://github.com/yourusername/disease-progression-lstm.git
-cd disease-progression-lstm
+python Disease\ Progression.py
 
-2. Run the disease_progression.py script:
+Or:
 
-python disease_progression.py
+python3 disease_progression.py
 
-### Code Explanation
+## Script Breakdown
 
-## Import Libraries
-The necessary libraries are imported, including NumPy for numerical operations, Pandas for data manipulation, scikit-learn for preprocessing, and TensorFlow for building the LSTM model.
+create_sequences(data, window_size)Creates sliding-window sequences for forecasting.
 
-## Data Generation
-Sample data is generated for illustration purposes. This simulates health metrics of 100 patients over 30 timesteps.
+load_data(...)Generates or loads raw data, applies global scaling, creates sequences, and performs train/test split.
 
-## Data Preprocessing
-The data is scaled using MinMaxScaler to bring all values into the range [0, 1]. The scaled data is reshaped to be suitable for LSTM input, i.e., [samples, time steps, features].
+build_model(input_shape)Defines the stacked LSTM architecture.
 
-## Train-Test Split
-The data is split into training and testing sets. 80% of the data is used for training, and 20% is used for testing.
+train_model(model, X_train, y_train, X_val, y_val, ...)Trains the model with EarlyStopping and ModelCheckpoint.
 
-## LSTM Model
-An LSTM model is built using TensorFlow's Keras API. The model consists of two LSTM layers followed by a dense layer. The model is compiled with the Adam optimizer and mean squared error (MSE) loss function.
+plot_metrics(history)Plots training/validation loss and MAE over epochs.
 
-## Model Training
-The model is trained on the training data for 10 epochs with a batch size of 32. Validation is performed on the testing data.
+main()Orchestrates version logging, data prep, model training, evaluation, and displays sample predictions.
 
-## Prediction
-The trained model is used to predict the future health metrics for the test patients. The predicted values are then inverse transformed to their original scale.
+## Configuration
 
-## Output
-The predicted disease progression metrics for the test patients are printed to the console.
+Adjust hyperparameters at the top of the script or within the main function:
 
-## Contributing
-Contributions are welcome! If you have any improvements or suggestions, please create a pull request or open an issue to discuss them.
+num_patients, timesteps, n_features: Data shape.
+
+window_size: Number of past timesteps for input.
+
+epochs, batch_size: Training parameters.
+
+## Results
+
+After running, you’ll see:
+
+Printed versions of NumPy, TensorFlow, and scikit-learn.
+
+Training and validation loss/MAE plots.
+
+Final test loss & MAE.
+
+Sample actual vs. predicted metrics.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/JaCar-868/Disease-Progression/blob/main/LICENSE) file for more details.
